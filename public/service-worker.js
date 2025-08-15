@@ -1,46 +1,53 @@
 /* eslint-disable no-restricted-globals */
 
-const CACHE_NAME = "tipcalc-cache-v1";
-const URLS_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/favicon.ico",
-  "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png",
-];
+// Cache version — change when you deploy to force update
+const CACHE_NAME = "pwa-cache-v2";
+const ASSETS_TO_CACHE = ["/", "/index.html", "/manifest.json", "/favicon.ico"];
 
-// Install SW & cache assets
+// Install — cache basic assets
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(URLS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
   self.skipWaiting();
 });
 
-// Activate & clean old caches
+// Activate — clear old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((cacheNames) =>
+      .then((names) =>
         Promise.all(
-          cacheNames
-            .filter((name) => name !== CACHE_NAME)
-            .map((name) => caches.delete(name))
+          names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n))
         )
       )
   );
   self.clients.claim();
 });
 
-// Fetch requests
+// Fetch — network-first for JS/CSS, cache-first for others
 self.addEventListener("fetch", (event) => {
+  if (
+    event.request.destination === "script" ||
+    event.request.destination === "style"
+  ) {
+    event.respondWith(
+      fetch(event.request)
+        .then((res) => {
+          const clone = res.clone();
+          caches
+            .open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, clone));
+          return res;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Default: try cache first, then network
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request);
-    })
+    caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
 });

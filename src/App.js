@@ -8,16 +8,26 @@ export default function App() {
 
   // Install button state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
 
   useEffect(() => {
     const beforeInstallHandler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      setShowInstallButton(true);
+      localStorage.setItem("pwaInstallAvailable", "true");
     };
 
     const installedHandler = () => {
-      setDeferredPrompt(null); // hide button after install
+      setDeferredPrompt(null);
+      setShowInstallButton(false);
+      localStorage.removeItem("pwaInstallAvailable");
     };
+
+    // Restore button if we previously had an install prompt
+    if (localStorage.getItem("pwaInstallAvailable") === "true") {
+      setShowInstallButton(true);
+    }
 
     window.addEventListener("beforeinstallprompt", beforeInstallHandler);
     window.addEventListener("appinstalled", installedHandler);
@@ -33,7 +43,13 @@ export default function App() {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.finally(() => {
         setDeferredPrompt(null);
+        setShowInstallButton(false);
+        localStorage.removeItem("pwaInstallAvailable");
       });
+    } else {
+      // No deferredPrompt? Hide button to avoid confusion
+      setShowInstallButton(false);
+      localStorage.removeItem("pwaInstallAvailable");
     }
   };
 
@@ -66,7 +82,7 @@ export default function App() {
       </div>
 
       {/* Install button */}
-      {deferredPrompt && (
+      {showInstallButton && (
         <button onClick={handleInstallClick} className="install-btn">
           Install App
         </button>
