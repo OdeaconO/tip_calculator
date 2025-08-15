@@ -1,33 +1,50 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Full-page centering */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #f8f9fa, #e9ecef);
-  padding: 20px;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-div {
+/* Main calculator card */
+.calculator {
   max-width: 500px;
   width: 100%;
   background: #fff;
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* spacing between mini cards */
 }
 
+/* Mini cards for each section */
+.calculator > div {
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Headings */
 h2,
 h3 {
   color: #34495e;
   margin-bottom: 10px;
 }
 
+/* Inputs & selects */
 input[type="number"],
 select {
   width: 100%;
@@ -36,7 +53,6 @@ select {
   border: 1px solid #ccc;
   font-size: 1rem;
   outline: none;
-  box-sizing: border-box;
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s;
 }
 
@@ -46,7 +62,9 @@ select:focus {
   box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
 }
 
+/* Button */
 button {
+  width: 100%;
   padding: 10px 20px;
   border-radius: 6px;
   border: none;
@@ -65,13 +83,10 @@ button:active {
   transform: scale(0.97);
 }
 
+/* Mobile tweaks */
 @media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-
-  div {
-    padding: 15px;
+  .calculator {
+    padding: 16px;
   }
 
   h2,

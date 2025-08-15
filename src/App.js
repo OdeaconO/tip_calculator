@@ -13,20 +13,30 @@ export default function App() {
   }
 
   return (
-    <div>
-      <BillAmount bill={bill} setBill={setBill}></BillAmount>
-      <Service service={service1} setService={setService1}>
-        How did you like the service?
-      </Service>
-      <Service service={service2} setService={setService2}>
-        How did your friends like the service?
-      </Service>
-      <TotalAmount
-        bill={bill}
-        service1={service1}
-        service2={service2}
-      ></TotalAmount>
-      <ResetButton onResetValues={resetValues}>Reset</ResetButton>
+    <div className="calculator">
+      <div>
+        <BillAmount bill={bill} setBill={setBill}></BillAmount>
+      </div>
+      <div>
+        <Service service={service1} setService={setService1}>
+          How did you like the service?
+        </Service>
+      </div>
+      <div>
+        <Service service={service2} setService={setService2}>
+          How did your friends like the service?
+        </Service>
+      </div>
+      <div>
+        <TotalAmount
+          bill={bill}
+          service1={service1}
+          service2={service2}
+        ></TotalAmount>
+      </div>
+      <div>
+        <ResetButton onResetValues={resetValues}>Reset</ResetButton>
+      </div>
     </div>
   );
 }
@@ -40,11 +50,9 @@ function BillAmount({ bill, setBill }) {
           type="number"
           min="0"
           step="any"
-          value={bill}
-          onChange={(e) => {
-            const val = Math.max(0, Number(e.target.value));
-            setBill(val);
-          }}
+          value={bill === 0 ? "" : bill}
+          placeholder="Enter the bill amount"
+          onChange={(e) => setBill(Number(e.target.value) || 0)}
         ></input>
       </form>
     </div>
