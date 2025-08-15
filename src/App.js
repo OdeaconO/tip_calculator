@@ -127,9 +127,7 @@ function Service({ service, setService, children }) {
 }
 
 function TotalAmount({ bill, service1, service2 }) {
-  const tips = [service1, service2].filter((val) => val > 0);
-  const avgTip =
-    tips.length > 0 ? tips.reduce((a, b) => a + b, 0) / tips.length : 0;
+  const avgTip = (service1 + service2) / 2;
   const tip = (bill * avgTip) / 100;
   const totalAmount = bill + tip;
 
