@@ -1,11 +1,9 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Full-page centering */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #f8f9fa, #e9ecef);
@@ -16,7 +14,6 @@ body {
   padding: 20px;
 }
 
-/* Main calculator card */
 .calculator {
   max-width: 500px;
   width: 100%;
@@ -26,10 +23,9 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 16px; /* spacing between mini cards */
+  gap: 16px;
 }
 
-/* Mini cards for each section */
 .calculator > div {
   background: #fff;
   border-radius: 8px;
@@ -37,14 +33,12 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Headings */
 h2,
 h3 {
   color: #34495e;
   margin-bottom: 10px;
 }
 
-/* Inputs & selects */
 input[type="number"],
 select {
   width: 100%;
@@ -62,7 +56,6 @@ select:focus {
   box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
 }
 
-/* Button */
 button {
   width: 100%;
   padding: 10px 20px;
@@ -83,7 +76,6 @@ button:active {
   transform: scale(0.97);
 }
 
-/* Mobile tweaks */
 @media (max-width: 600px) {
   .calculator {
     padding: 16px;
