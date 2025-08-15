@@ -98,3 +98,13 @@ button:active {
     font-size: 0.95rem;
   }
 }
+
+.install-btn {
+  background-color: #28a745;
+  color: white;
+  margin-top: 8px;
+}
+
+.install-btn:hover {
+  background-color: #218838;
+}

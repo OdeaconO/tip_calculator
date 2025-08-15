@@ -1,10 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 export default function App() {
   const [bill, setBill] = useState(0);
   const [service1, setService1] = useState(0);
   const [service2, setService2] = useState(0);
+
+  // Install button state
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(
+    localStorage.getItem("pwaInstalled") === "true"
+  );
+
+  useEffect(() => {
+    const beforeInstallHandler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    const installedHandler = () => {
+      setIsInstalled(true);
+      localStorage.setItem("pwaInstalled", "true");
+    };
+
+    window.addEventListener("beforeinstallprompt", beforeInstallHandler);
+    window.addEventListener("appinstalled", installedHandler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", beforeInstallHandler);
+      window.removeEventListener("appinstalled", installedHandler);
+    };
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.finally(() => {
+        setDeferredPrompt(null);
+      });
+    }
+  };
 
   function resetValues() {
     setBill(0);
@@ -15,7 +50,7 @@ export default function App() {
   return (
     <div className="calculator">
       <div>
-        <BillAmount bill={bill} setBill={setBill}></BillAmount>
+        <BillAmount bill={bill} setBill={setBill} />
       </div>
       <div>
         <Service service={service1} setService={setService1}>
@@ -28,15 +63,18 @@ export default function App() {
         </Service>
       </div>
       <div>
-        <TotalAmount
-          bill={bill}
-          service1={service1}
-          service2={service2}
-        ></TotalAmount>
+        <TotalAmount bill={bill} service1={service1} service2={service2} />
       </div>
       <div>
         <ResetButton onResetValues={resetValues}>Reset</ResetButton>
       </div>
+
+      {/* Install button */}
+      {!isInstalled && deferredPrompt && (
+        <button onClick={handleInstallClick} className="install-btn">
+          Install App
+        </button>
+      )}
     </div>
   );
 }
@@ -53,7 +91,7 @@ function BillAmount({ bill, setBill }) {
           value={bill === 0 ? "" : bill}
           placeholder="Enter the bill amount"
           onChange={(e) => setBill(Number(e.target.value) || 0)}
-        ></input>
+        />
       </form>
     </div>
   );
@@ -91,5 +129,5 @@ function TotalAmount({ bill, service1, service2 }) {
 }
 
 function ResetButton({ onResetValues, children }) {
-  return <button onClick={() => onResetValues()}>{children}</button>;
+  return <button onClick={onResetValues}>{children}</button>;
 }
