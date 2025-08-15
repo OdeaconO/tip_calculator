@@ -1,6 +1,6 @@
 # Tip Calculator 💰
 
-A sleek and responsive Progressive Web App (PWA) built with React to help you calculate tips based on service ratings from you and a friend.  
+A sleek and responsive **Progressive Web App (PWA)** built with React to help you calculate tips based on service ratings from you and a friend.  
 Just enter the bill amount, rate the service, and instantly see how much you need to pay — including the tip.
 
 🔗 **Live Demo**: [tip-calct.netlify.app](https://tip-calct.netlify.app)
@@ -13,8 +13,9 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 - **Service Rating** – Rate the service (0% to 20%) for both you and a friend.
 - **Smart Tip Averaging** – Only considers non-zero ratings to calculate a fair average.
 - **Live Total Update** – See the calculated total in real-time.
-- **Offline Support** – Works even without an internet connection (PWA).
-- **Installable on Mobile** – Add it to your home screen for quick access.
+- **Offline Support** – Works even without an internet connection thanks to the **service worker**.
+- **Installable on Mobile & Desktop** –  
+  Now includes a dedicated **Install App** button that appears when your browser supports installation.
 - **Reset Button** – Quickly reset all values to start fresh.
 - **Responsive Design** – Optimized for both mobile and desktop devices.
 
@@ -27,6 +28,7 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 - **CSS** – Styling and layout.
 - **Service Worker** – Enables offline functionality.
 - **Web App Manifest** – Powers installability and native-like behavior.
+- **Custom Install Prompt Handling** – Uses `beforeinstallprompt` and `appinstalled` events for better install UX.
 
 ---
 
@@ -36,7 +38,8 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 2. Enter the bill amount.
 3. Rate the service for both you and your friend.
 4. View the total amount including the calculated tip.
-5. Optionally, install the app to your home screen for quick access.
+5. Click the **Install App** button (if available) or use your browser's install option.
+6. Use it offline, just like a native app.
 
 ---
 
@@ -46,6 +49,7 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 - Support for splitting the bill.
 - Currency formatting based on locale.
 - Dark mode toggle.
+- Toast notification after installation.
 
 ---
 
