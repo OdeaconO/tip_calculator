@@ -11,9 +11,6 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 
 - **Bill Input** – Enter the total bill amount.
 - **Service Rating** – Rate the service (0% to 20%) for both you and a friend.
-- **Smart Tip Averaging** – Only considers non-zero ratings to calculate a fair average.
-- **Live Total Update** – See the calculated total in real-time.
-- **Offline Support** – Works even without an internet connection thanks to the **service worker**.
 - **Installable on Mobile & Desktop** –  
   Now includes a dedicated **Install App** button that appears when your browser supports installation.
 - **Reset Button** – Quickly reset all values to start fresh.
@@ -26,7 +23,6 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 - **React** – Frontend framework for building UI components.
 - **JavaScript (ES6)** – Core logic and interactivity.
 - **CSS** – Styling and layout.
-- **Service Worker** – Enables offline functionality.
 - **Web App Manifest** – Powers installability and native-like behavior.
 - **Custom Install Prompt Handling** – Uses `beforeinstallprompt` and `appinstalled` events for better install UX.
 
@@ -39,7 +35,6 @@ Just enter the bill amount, rate the service, and instantly see how much you nee
 3. Rate the service for both you and your friend.
 4. View the total amount including the calculated tip.
 5. Click the **Install App** button (if available) or use your browser's install option.
-6. Use it offline, just like a native app.
 
 ---
 
